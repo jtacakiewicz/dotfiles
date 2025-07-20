@@ -4,6 +4,8 @@ let
     pyPkgs = with pythonPackages; [
         pip
         tf-keras
+        tensorflow
+        opencv-python
         torch
         spacy
         pydicom
