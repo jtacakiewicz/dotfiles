@@ -23,11 +23,13 @@
         pkgs.git
         pkgs.neovim
 
+        pkgs.xclip
         pkgs.htop
 
         pkgs.gimp
         pkgs.mpv
 
+        pkgs.libGL
         pkgs.obsidian
         # pkgs.discord
         pkgs.proton-pass
@@ -107,6 +109,6 @@
     home.sessionVariables = {
         EDITOR = "nvim";
     };
-
     programs.home-manager.enable = true;
+
 }
