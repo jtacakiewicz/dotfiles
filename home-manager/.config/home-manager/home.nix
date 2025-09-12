@@ -5,35 +5,36 @@
         inputs.nix-colors.homeManagerModules.default
         ./modules/coding.nix
         ./modules/gaming.nix
-        ./modules/ollama.nix
+        # ./modules/ollama.nix
     ];
-    home.username = "jan";
-    home.homeDirectory = "/home/jan";
+    home.username = "jamjan";
+    home.homeDirectory = "/home/jamjan";
 
     home.stateVersion = "24.11"; 
 
     nixpkgs.config.allowUnfree = true;
 
     colorScheme = inputs.nix-colors.colorSchemes.nord;
-    home.packages = [
-        pkgs.gnomeExtensions.tiling-assistant
-        pkgs.gnome-screenshot
-        pkgs.gnomeExtensions.hide-top-bar
+    home.packages = with pkgs; [
+        gnomeExtensions.tiling-assistant
+        gnome-screenshot
+        gnomeExtensions.hide-top-bar
 
-        pkgs.git
-        pkgs.neovim
+        git
+        neovim
 
-        pkgs.xclip
-        pkgs.htop
+        xclip
+        htop
 
-        pkgs.gimp
-        pkgs.mpv
+        gimp
+        mpv
 
-        pkgs.libGL
-        pkgs.obsidian
-        # pkgs.discord
-        pkgs.proton-pass
-        pkgs.spotify
+        libGL
+        obsidian
+        # discord
+        proton-pass
+        spotify
+        spotify-player
 
     ];
     # # You can also create simple shell scripts directly inside your
