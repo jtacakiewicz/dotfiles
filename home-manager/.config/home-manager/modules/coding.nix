@@ -6,8 +6,6 @@
     ];
     home.packages = [
         pkgs.lazygit
-        # # Adds the 'hello' command to your environment. It prints a friendly
-        # # "Hello, world!" when run.
         pkgs.zsh
         pkgs.gnumake
         pkgs.unzip
@@ -24,8 +22,5 @@
         pkgs.ninja
 
         pkgs.python312
-        pkgs.lua-language-server
-        pkgs.python312Packages.python-lsp-server
-
     ];
 }
