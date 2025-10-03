@@ -16,10 +16,23 @@
             pkgs = nixpkgs.legacyPackages.${system};
         in
             {
-            homeConfigurations."jamjan" = home-manager.lib.homeManagerConfiguration {
-                inherit pkgs;
-                extraSpecialArgs = { inherit inputs; };
-                modules = [ ./home.nix ];
+            homeConfigurations = {
+                nixos = home-manager.lib.homeManagerConfiguration {
+                    inherit pkgs;
+                    extraSpecialArgs = { inherit inputs; };
+                    modules = [
+                        ./common.nix
+                        ./nixos.nix
+                    ];
+                };
+                darwin = home-manager.lib.homeManagerConfiguration {
+                    inherit pkgs;
+                    extraSpecialArgs = { inherit inputs; };
+                    modules = [
+                        ./common.nix
+                        ./macos.nix
+                    ];
+                };
             };
         };
 }
