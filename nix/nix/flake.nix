@@ -51,6 +51,7 @@
                         pkgs.ripgrep
                         pkgs.htop
                         pkgs.jq
+                        pkgs.git
                         pkgs.lazygit
                         pkgs.inetutils
                         pkgs.putty
@@ -87,6 +88,7 @@
                         "the-unarchiver"
                         "intellij-idea-ce"
                         "aerospace"
+                        "docker"
                     ];
                     # onActivation.cleanup = "zap";
                     onActivation.autoUpdate = true;
