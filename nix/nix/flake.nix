@@ -18,9 +18,13 @@
             url = "github:homebrew/homebrew-cask";
             flake = false;
         };
+        aerospace-tap = {
+            url = "github:nikitabobko/AeroSpace";
+            flake = false;
+        };
     };
 
-    outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew, homebrew-core, homebrew-cask}:
+    outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew, homebrew-core, homebrew-cask, aerospace-tap}:
         let
             configuration = { pkgs, config, ... }: {
                 # List packages installed in system profile. To search by name, run:
@@ -79,14 +83,10 @@
                         "libomp"
                     ];
                     casks = [
-                        "android-studio"
-                        "android-commandlinetools"
-                        "android-platform-tools"
-                        "docker"
                         "hammerspoon"
                         "the-unarchiver"
                         "intellij-idea-ce"
-                        "rectangle"
+                        "aerospace"
                     ];
                     # onActivation.cleanup = "zap";
                     onActivation.autoUpdate = true;
@@ -163,8 +163,16 @@
                         enableRosetta = true;
                         user = "epi";
                         autoMigrate = true;
+                        taps = {
+                            "homebrew/homebrew-core" = homebrew-core;
+                            "homebrew/homebrew-cask" = homebrew-cask;
+                            "nikitabobko/aerospace" = aerospace-tap;
+                        };
                       };
                     }
+                    ({config, ...}: {
+                        homebrew.taps = builtins.attrNames config.nix-homebrew.taps;
+                    })
                 ];
             };
 
