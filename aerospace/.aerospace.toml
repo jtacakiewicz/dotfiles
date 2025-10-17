@@ -92,7 +92,7 @@ automatically-unhide-macos-hidden-apps = false
     # '''
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#layout
-    # ctrl-alt-f = 'fullscreen'
+    alt-cmd-f = 'fullscreen'
     alt-slash = 'layout tiles horizontal vertical'
     alt-comma = 'layout accordion horizontal vertical'
 
