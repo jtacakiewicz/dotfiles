@@ -79,6 +79,8 @@ alias vim='nvim'
 alias v='nvim'
 alias c='clear'
 alias py='python3'
+alias cmake="cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
+alias venv="source .venv/bin/activate"
 alias nix-shell='nix-shell --run $SHELL'
 if command -v xdg-open >/dev/null 2>&1
 then
