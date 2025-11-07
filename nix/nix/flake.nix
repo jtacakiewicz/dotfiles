@@ -72,21 +72,15 @@
                         pkgs.portaudio
                         pkgs.qemu
 
-
                         # pkgs.hyprland
-                        pkgs.alt-tab-macos
-                        pkgs.wireshark
-                        pkgs.spicetify-cli
                     ];
                 homebrew = {
                     enable = true;
                     brews = [
                         "libomp"
+                        "syncthing"
                     ];
                     casks = [
-                        "hammerspoon"
-                        "the-unarchiver"
-                        "intellij-idea-ce"
                         "aerospace"
                         "docker"
                     ];
