@@ -12,9 +12,12 @@
 
     outputs = { nixpkgs, home-manager, ... }@inputs:
         let
-            system = "x86_64-linux";
-            pkgs = nixpkgs.legacyPackages.${system};
+            systems = {
+                darwin = "aarch64-darwin";
+                linux = "x86_64-linux";
+            };
         in
+            rec {
             {
             homeConfigurations = {
                 nixos = home-manager.lib.homeManagerConfiguration {
