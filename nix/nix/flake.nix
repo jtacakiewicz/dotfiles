@@ -1,55 +1,45 @@
 {
-    description = "Epic Darwin system flake";
+    description = "Unified Darwin + Home Manager flake";
 
     inputs = {
         nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+
         nix-darwin = {
             url = "github:LnL7/nix-darwin";
             inputs.nixpkgs.follows = "nixpkgs";
         };
-        nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
 
-        homebrew-core = {
-            url = "github:homebrew/homebrew-core";
-            flake = false;
-        };
-        homebrew-cask = {
-            url = "github:homebrew/homebrew-cask";
-            flake = false;
-        };
-        aerospace-tap = {
-            url = "github:nikitabobko/AeroSpace";
-            flake = false;
+        home-manager = {
+            url = "github:nix-community/home-manager";
+            inputs.nixpkgs.follows = "nixpkgs";
         };
     };
 
-    outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew, homebrew-core, homebrew-cask, aerospace-tap }:
-        {
-            # darwin-rebuild switch --flake .
+    outputs = inputs@{ self, nixpkgs, nix-darwin, home-manager, ... }:
+            {
+            # -----------------------------
+            # 1) Darwin system configuration
+            # -----------------------------
             darwinConfigurations."Jans-MacBook-Air" = nix-darwin.lib.darwinSystem {
+                system =  "aarch64-darwin";
                 modules = [
-                    ./macos-conf.nix
-                    nix-homebrew.darwinModules.nix-homebrew
+                    darwin/macos-conf.nix
+                    home-manager.darwinModules.home-manager
                     {
-                        nix-homebrew = {
-                            enable = true;
-                            enableRosetta = true;
-                            user = "epi";
-                            autoMigrate = true;
-                            taps = {
-                                "homebrew/homebrew-core" = homebrew-core;
-                                "homebrew/homebrew-cask" = homebrew-cask;
-                                "nikitabobko/aerospace" = aerospace-tap;
-                            };
-                        };
+                        home-manager.useGlobalPkgs = true;
+                        home-manager.useUserPackages = true;
+
+                        home-manager.users.epi = import home-manager/home.nix;
                     }
-                    ({ config, ... }: {
-                        homebrew.taps = builtins.attrNames config.nix-homebrew.taps;
-                    })
                 ];
             };
 
-            darwinPackages = self.darwinConfigurations."Jans-MacBook-Air".pkgs;
+            # -------------------------------------
+            # 2) Home-Manager standalone (optional)
+            # -------------------------------------
+            homeConfigurations = import ./home.nix {
+                inherit pkgs inputs home-manager;
+            };        
         };
 }
 
