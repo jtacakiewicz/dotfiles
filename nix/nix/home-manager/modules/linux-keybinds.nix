@@ -5,7 +5,7 @@
         gnomeExtensions.tiling-assistant
         gnome-screenshot
         gnomeExtensions.hide-top-bar
-    ]
+    ];
     dconf.settings = {
         "org/gnome/settings-daemon/plugins/media-keys" = {
             custom-keybindings = [ 
