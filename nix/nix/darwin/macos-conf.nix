@@ -36,7 +36,7 @@
         pkgs.doxygen
         pkgs.gtest
         pkgs.lcov
-        pkgs.vcpkg
+        # pkgs.vcpkg
 
         pkgs.pngpaste
         pkgs.xclip
@@ -59,6 +59,7 @@
         onActivation.autoUpdate = true;
         onActivation.upgrade = true;
     };
+    system.primaryUser = "epi";
 
     system.defaults = {
         dock = {
