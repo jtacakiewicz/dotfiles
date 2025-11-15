@@ -8,6 +8,20 @@
             url = "github:LnL7/nix-darwin";
             inputs.nixpkgs.follows = "nixpkgs";
         };
+        nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
+
+        homebrew-core = {
+            url = "github:homebrew/homebrew-core";
+            flake = false;
+        };
+        homebrew-cask = {
+            url = "github:homebrew/homebrew-cask";
+            flake = false;
+        };
+        aerospace-tap = {
+            url = "github:nikitabobko/AeroSpace";
+            flake = false;
+        };
 
         home-manager = {
             url = "github:nix-community/home-manager";
@@ -16,7 +30,7 @@
         nix-colors.url = "github:misterio77/nix-colors";
     };
 
-    outputs = inputs@{ self, nixpkgs, nix-darwin, home-manager, ... }:
+    outputs = inputs@{ self, nixpkgs, nix-darwin, nix-homebrew, homebrew-core, homebrew-cask, aerospace-tap, home-manager, ... }:
         let
             systems = {
                 darwin = "aarch64-darwin";
@@ -30,15 +44,26 @@
             in nix-darwin.lib.darwinSystem {
                     system =  "aarch64-darwin";
                     modules = [
-                        darwin/macos-conf.nix
-                        home-manager.darwinModules.home-manager
+                        ./darwin/macos-conf.nix
+                        nix-homebrew.darwinModules.nix-homebrew
                         {
-                            home-manager.useGlobalPkgs = true;
-                            home-manager.useUserPackages = true;
-
-                            home-manager.users.epi = homeConfigs.darwin;
+                            nix-homebrew = {
+                                enable = true;
+                                enableRosetta = true;
+                                user = "epi";
+                                autoMigrate = true;
+                                taps = {
+                                    "homebrew/homebrew-core" = homebrew-core;
+                                    "homebrew/homebrew-cask" = homebrew-cask;
+                                    "nikitabobko/aerospace" = aerospace-tap;
+                                };
+                            };
                         }
+                        ({ config, ... }: {
+                            homebrew.taps = builtins.attrNames config.nix-homebrew.taps;
+                        })
                     ];
+
                 };
 
             homeConfigurations."jamjan-linux" = let
