@@ -23,7 +23,11 @@
         obsidian
         proton-pass
         spotify
+        syncthing
     ];
+    services.syncthing = {
+        enable = true;
+    };
     programs.home-manager.enable = true;
 
 }
