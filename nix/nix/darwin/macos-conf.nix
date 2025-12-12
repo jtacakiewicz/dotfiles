@@ -58,6 +58,7 @@
         ];
         onActivation.autoUpdate = true;
         onActivation.upgrade = true;
+        onActivation.cleanup = "zap"; # clean whenever we rebuild
     };
     system.primaryUser = "epi";
 
