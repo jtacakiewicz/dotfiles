@@ -2,6 +2,7 @@ export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export TERM="xterm-256color"
 export EDITOR="nvim"
+export SHELL="zsh"
 
 # plugin manager
 if [[ -f "/opt/homebrew/bin/brew" ]] then
