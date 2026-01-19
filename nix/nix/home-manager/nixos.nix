@@ -4,7 +4,7 @@
 {
     imports = [
         ./modules/linux-gaming.nix
-        # ./modules/ollama.nix
+        ./modules/ollama.nix
         ./modules/linux-keybinds.nix
         ./modules/webapps.nix
     ];
