@@ -41,6 +41,21 @@ typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 # Keybindings
 autoload -U up-line-or-beginning-search
 autoload -U down-line-or-beginning-search
+autoload -Uz add-zsh-hook
+
+# load_nix_shell() {
+#   if [[ -f "flake.nix" && -z "$IN_NIX_SHELL" && -z "$SHLVL_NIX" ]]; then
+#     echo "❄️ Entering Nix Develop..."
+#     export SHLVL_NIX=1
+#     nix develop -c $SHELL
+#     
+#     unset SHLVL_NIX
+#   fi
+# }
+#
+# add-zsh-hook chpwd load_nix_shell
+
+
 zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
 bindkey "^[[A" up-line-or-beginning-search # Up
@@ -82,6 +97,7 @@ alias py='python3'
 alias cmake="cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
 alias venv="source .venv/bin/activate"
 alias nix-shell='nix-shell --run $SHELL'
+
 if command -v xdg-open >/dev/null 2>&1
 then
     alias open='xdg-open'
@@ -92,7 +108,9 @@ fi
 eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
 #
-source ~/.env
+if [[ -r "~/.env" ]]; then
+  source ~/.env
+fi
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
