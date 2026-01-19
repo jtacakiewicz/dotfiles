@@ -13,6 +13,12 @@
     # Bootloader.
     boot.loader.systemd-boot.enable = true;
     boot.loader.efi.canTouchEfiVariables = true;
+    boot.kernelParams = [ 
+        "nvme_core.default_ps_max_latency_us=0"
+        "pcie_aspm=off"
+        "nvme_core.hmb_for_ssd=0"
+        "nvme_core.set_min_log_size=0"
+    ];
 
     nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -50,8 +56,6 @@
     hardware.graphics.enable = true;
     hardware.nvidia.open = false;  # see the note above
     # Enable the X11 windowing system.
-
-    # Enable the GNOME Desktop Environment.
 
     systemd.targets.sleep.enable = false;
     systemd.targets.suspend.enable = false;
@@ -131,12 +135,6 @@
     #     enableSSHSupport = true;
     # };
 
-    # List services that you want to enable:
-
-    services.ollama = {
-        enable = true;
-        acceleration = "cuda";
-    };
 
     # Enable the OpenSSH daemon.
     # services.openssh.enable = true;
