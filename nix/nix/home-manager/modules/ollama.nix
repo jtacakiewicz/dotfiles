@@ -11,12 +11,17 @@
         Install = {
             WantedBy = [ "default.target" ];
         };
+
         Service = {
             ExecStart = "${pkgs.writeShellScript "ollama-serve-start" ''
-                ${pkgs.ollama}/bin/ollama serve
+                ${pkgs.ollama-cuda}/bin/ollama serve
             ''}";
+            Environment = [
+                "OLLAMA_GPU=1"
+                "CUDA_VISIBLE_DEVICES=0"
+            ];
+            Restart = "on-failure";
         };
-        # Optionally you can specify other settings like environment variables, working directory, etc.
     };
 }
 
