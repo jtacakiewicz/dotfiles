@@ -5,3 +5,7 @@
 	helper = store
 [safe]
 	directory = /etc/nixos
+[pull]
+	rebase = true
+[init]
+	defaultBranch = main
