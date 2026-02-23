@@ -106,6 +106,29 @@ fi
 
 # Shell integrations
 eval "$(fzf --zsh)"
+fzf-history-widget-smart() {
+  local out
+  # We add --height and --layout to keep it from taking over the whole screen
+  out=$(fc -rl 1 | awk '{ line = $0; sub(/^[ \t]*[0-9]+[ \t]+/, "", line); if (!seen[line]++) print line }' | 
+        fzf +m \
+        --height 40% \
+        --layout=reverse \
+        --query="$LBUFFER" \
+        --print-query \
+        --bind "ctrl-c:print-query+abort,esc:print-query+abort")
+  
+  if [ -n "$out" ]; then
+    local lines=("${(@f)out}")
+    if [[ ${#lines[@]} -gt 1 ]]; then
+      LBUFFER="${(j:\n:)lines[2,-1]}"
+    else
+      LBUFFER="${lines[1]}"
+    fi
+  fi
+  zle reset-prompt
+}
+
+zle -N fzf-history-widget fzf-history-widget-smart
 eval "$(zoxide init --cmd cd zsh)"
 #
 if [[ -r "~/.env" ]]; then
