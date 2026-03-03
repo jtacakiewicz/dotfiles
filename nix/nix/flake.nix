@@ -38,7 +38,7 @@
             };
         in
             rec {
-            darwinConfigurations."Jans-MacBook-Air" = let
+            darwinConfigurations."Jans-Macbook-Air" = let
                 pkgs = import nixpkgs { system = systems.darwin; };
                 homeConfigs = import ./home-manager/home.nix { inherit pkgs inputs home-manager; };
             in nix-darwin.lib.darwinSystem {
@@ -65,6 +65,11 @@
                     ];
 
                 };
+            homeConfigurations."epi-macos" = let
+                pkgs = import nixpkgs { system = systems.darwin; };
+                homeConfigs = import ./home-manager/home.nix { inherit pkgs inputs home-manager; };
+            in
+                homeConfigs.darwin;
 
             homeConfigurations."jamjan-linux" = let
                 pkgs = import nixpkgs { system = systems.linux; };

@@ -8,6 +8,13 @@
         ./modules/linux-keybinds.nix
         ./modules/webapps.nix
     ];
+    home.packages = with pkgs; [
+        gimp
+        vlc
+
+        libGL
+        proton-pass
+    ];
     home.username = "jamjan";
     home.homeDirectory = "/home/jamjan";
 }

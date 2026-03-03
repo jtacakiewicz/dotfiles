@@ -3,8 +3,7 @@
     nixpkgs.config.allowUnfree = true;
 
     environment.systemPackages = [
-        pkgs.neovim
-        pkgs.tmux
+        pkgs.home-manager
 
         pkgs.mkalias
         pkgs.go
@@ -13,23 +12,15 @@
         pkgs.yarn
         # pkgs.python3
 
-        pkgs.zoxide
-        pkgs.stow
         pkgs.docker
 
         pkgs.fd
-        pkgs.fzf
-        pkgs.ripgrep
         pkgs.htop
         pkgs.jq
-        pkgs.git
-        pkgs.lazygit
         pkgs.inetutils
         pkgs.putty
         pkgs.wget
 
-        pkgs.clang-tools
-        pkgs.cmake
         pkgs.codespell
         pkgs.conan
         pkgs.cppcheck
@@ -50,7 +41,6 @@
         enable = true;
         brews = [
             "libomp"
-            "syncthing"
         ];
         casks = [
             "aerospace"
@@ -83,8 +73,6 @@
     ];
 
     nix.settings.experimental-features = "nix-command flakes";
-
-    programs.zsh.enable = true;
 
     system.configurationRevision = config.self.rev or config.self.dirtyRev or null;
     system.stateVersion = 5;

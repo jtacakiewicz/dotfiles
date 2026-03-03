@@ -1,15 +1,15 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
 {
     imports = [
         inputs.nix-colors.homeManagerModules.default
-        ./modules/coding.nix
-        ./modules/gaming.nix
+        # ./modules/coding.nix
+        # ./modules/gaming.nix
         # ./modules/ollama.nix
-        ./modules/linux-keybinds.nix
+        # ./modules/linux-keybinds.nix
     ];
-    home.username = "jamjan";
-    home.homeDirectory = "/home/jamjan";
+    home.username = "epi";
+    home.homeDirectory = "/Users/epi";
 
     home.stateVersion = "24.11"; 
 
@@ -17,18 +17,6 @@
 
     colorScheme = inputs.nix-colors.colorSchemes.nord;
     home.packages = with pkgs; [
-        git
-        neovim
-        xclip
-        htop
-
-        gimp
-        vlc
-
-        libGL
-        obsidian
-        proton-pass
-        spotify
     ];
     # Simple script
     # (pkgs.writeShellScriptBin "my-hello" ''
@@ -51,6 +39,5 @@
     home.sessionVariables = {
         EDITOR = "nvim";
     };
-    programs.home-manager.enable = true;
 
 }

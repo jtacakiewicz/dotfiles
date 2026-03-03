@@ -16,12 +16,7 @@
         xclip
         htop
 
-        gimp
-        vlc
-
-        libGL
         obsidian
-        proton-pass
         spotify
         syncthing
     ];
