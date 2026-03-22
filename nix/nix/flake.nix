@@ -85,6 +85,14 @@
                     )
                 ];
             };
+            nixosConfigurations."truncatum" = nixpkgs.lib.nixosSystem {
+                system = systems.linux; # Assuming 'systems' is defined and 'linux' is "x86_64-linux"
+                modules = [
+                    ({ config, pkgs, ... }: 
+                        import ./truncatum/configuration.nix { inherit config pkgs inputs home-manager; }
+                    )
+                ];
+            };
         };
 }
 
