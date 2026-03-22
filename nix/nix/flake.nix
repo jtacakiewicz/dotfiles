@@ -77,6 +77,12 @@
             in
                 homeConfigs.nixos;
 
+            homeConfigurations."truncatum" = let
+                pkgs = import nixpkgs { system = systems.linux; };
+                homeConfigs = import ./home-manager/home.nix { inherit pkgs inputs home-manager; };
+            in
+                homeConfigs.truncatum;
+
             nixosConfigurations."jamjan-linux" = nixpkgs.lib.nixosSystem {
                 system = systems.linux; # Assuming 'systems' is defined and 'linux' is "x86_64-linux"
                 modules = [
