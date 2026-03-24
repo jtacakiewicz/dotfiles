@@ -28,9 +28,10 @@
             inputs.nixpkgs.follows = "nixpkgs";
         };
         nix-colors.url = "github:misterio77/nix-colors";
+        forgejo.url = "path:./modules/forgejo-container";
     };
 
-    outputs = inputs@{ self, nixpkgs, nix-darwin, nix-homebrew, homebrew-core, homebrew-cask, aerospace-tap, home-manager, ... }:
+    outputs = inputs@{ self, nixpkgs, nix-darwin, nix-homebrew, homebrew-core, homebrew-cask, aerospace-tap, home-manager, forgejo, ... }:
         let
             systems = {
                 darwin = "aarch64-darwin";
@@ -97,6 +98,7 @@
                     ({ config, pkgs, ... }: 
                         import ./truncatum/configuration.nix { inherit config pkgs inputs home-manager; }
                     )
+                    forgejo.nixosModules.forgejo-container
                 ];
             };
         };
