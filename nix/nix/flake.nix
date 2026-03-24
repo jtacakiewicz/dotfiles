@@ -29,9 +29,10 @@
         };
         nix-colors.url = "github:misterio77/nix-colors";
         forgejo.url = "path:./modules/forgejo-container";
+        own-dns.url = "path:./modules/dns";
     };
 
-    outputs = inputs@{ self, nixpkgs, nix-darwin, nix-homebrew, homebrew-core, homebrew-cask, aerospace-tap, home-manager, forgejo, ... }:
+    outputs = inputs@{ self, nixpkgs, nix-darwin, nix-homebrew, homebrew-core, homebrew-cask, aerospace-tap, home-manager, forgejo, own-dns, ... }:
         let
             systems = {
                 darwin = "aarch64-darwin";
@@ -98,7 +99,9 @@
                     ({ config, pkgs, ... }: 
                         import ./truncatum/configuration.nix { inherit config pkgs inputs home-manager; }
                     )
+                    ({ ... }: import ./dns-container.nix)
                     forgejo.nixosModules.forgejo-container
+                    own-dns.nixosModules.dns-container
                 ];
             };
         };
