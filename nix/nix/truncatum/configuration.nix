@@ -11,6 +11,8 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.grub.efiSupport = true;
   boot.loader.grub.device = "nodev";
+  boot.enableContainers = true;
+  virtualisation.containers.enable = true;
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -82,9 +84,11 @@
   # services.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
+  programs.zsh.enable = true;
   users.users.jamjan = {
     isNormalUser = true;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    shell = pkgs.zsh;
   };
   services.openssh.enable = true;
   services.openssh.settings = {
