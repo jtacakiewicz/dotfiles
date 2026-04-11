@@ -16,6 +16,10 @@
 
         hostAddress = "10.233.0.1";
         localAddress = "10.233.0.3";
+        forwardPorts = [
+          { protocol = "udp"; hostPort = 53; containerPort = 53; }
+          { protocol = "tcp"; hostPort = 53; containerPort = 53; }
+        ];
 
         config = { config, pkgs, ... }: {
           system.stateVersion = "24.11";
@@ -27,12 +31,10 @@
             enable = true;
 
             settings = {
-              # Upstream resolvers
               server = [ "1.1.1.1" "8.8.8.8" ];
 
-              # Your Forgejo mapping
               address = [
-                "/git.local/10.233.0.2"
+                "/git.test/10.233.0.2"
               ];
 
               listen-address = "0.0.0.0";

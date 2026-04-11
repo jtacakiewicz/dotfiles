@@ -99,7 +99,6 @@
                     ({ config, pkgs, ... }: 
                         import ./truncatum/configuration.nix { inherit config pkgs inputs home-manager; }
                     )
-                    ({ ... }: import ./dns-container.nix)
                     forgejo.nixosModules.forgejo-container
                     own-dns.nixosModules.dns-container
                 ];
