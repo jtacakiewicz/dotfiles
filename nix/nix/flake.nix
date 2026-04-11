@@ -73,11 +73,11 @@
             in
                 homeConfigs.darwin;
 
-            homeConfigurations."jamjan-linux" = let
+            homeConfigurations."ogisui" = let
                 pkgs = import nixpkgs { system = systems.linux; };
                 homeConfigs = import ./home-manager/home.nix { inherit pkgs inputs home-manager; };
             in
-                homeConfigs.nixos;
+                homeConfigs.ogisui;
 
             homeConfigurations."truncatum" = let
                 pkgs = import nixpkgs { system = systems.linux; };
@@ -85,11 +85,11 @@
             in
                 homeConfigs.truncatum;
 
-            nixosConfigurations."jamjan-linux" = nixpkgs.lib.nixosSystem {
+            nixosConfigurations."ogisui" = nixpkgs.lib.nixosSystem {
                 system = systems.linux; # Assuming 'systems' is defined and 'linux' is "x86_64-linux"
                 modules = [
                     ({ config, pkgs, ... }: 
-                        import ./nixos/configuration.nix { inherit config pkgs inputs home-manager; }
+                        import ./ogisui/configuration.nix { inherit config pkgs inputs home-manager; }
                     )
                 ];
             };

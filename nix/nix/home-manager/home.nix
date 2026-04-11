@@ -1,13 +1,13 @@
 { pkgs, inputs, home-manager }:
 
 {
-    nixos = home-manager.lib.homeManagerConfiguration {
+    ogisui = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         extraSpecialArgs = { inherit inputs; };
         modules = [
             ./common.nix
             ./common-gui.nix
-            ./nixos.nix
+            ./ogisui.nix
         ];
     };
 

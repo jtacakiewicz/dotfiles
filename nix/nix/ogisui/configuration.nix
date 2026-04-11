@@ -25,7 +25,7 @@
     # Use latest kernel.
     boot.kernelPackages = pkgs.linuxPackages_latest;
 
-    networking.hostName = "nixos"; # Define your hostname.
+    networking.hostName = "ogisui"; # Define your hostname.
     # networking.wireless.enable = true;    # Enables wireless support via wpa_supplicant.
 
     # Configure network proxy if necessary
@@ -136,8 +136,11 @@
     # };
 
 
-    # Enable the OpenSSH daemon.
-    # services.openssh.enable = true;
+    services.tailscale.enable = true;
+    networking.firewall = {
+        enable=true;
+        allowedUDPPorts = [ config.services.tailscale.port ];
+    };
 
     # Open ports in the firewall.
     # networking.firewall.allowedTCPPorts = [ ... ];
