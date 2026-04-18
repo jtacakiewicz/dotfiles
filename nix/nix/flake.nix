@@ -87,15 +87,16 @@
                 homeConfigs.truncatum;
 
             nixosConfigurations."ogisui" = nixpkgs.lib.nixosSystem {
-                system = systems.linux; # Assuming 'systems' is defined and 'linux' is "x86_64-linux"
+                system = systems.linux;
+                specialArgs = {
+                    localDNSip = servIp.LANip;
+                };
                 modules = [
-                    ({ config, pkgs, ... }: 
-                        import ./ogisui/configuration.nix { inherit config pkgs inputs home-manager; }
-                    )
+                    ./ogisui/configuration.nix
                 ];
             };
             nixosConfigurations."truncatum" = nixpkgs.lib.nixosSystem {
-                system = systems.linux; # Assuming 'systems' is defined and 'linux' is "x86_64-linux"
+                system = systems.linux;
                 specialArgs = {
                     hostLanIp = servIp.LANip;
                 };

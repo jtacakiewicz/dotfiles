@@ -2,7 +2,7 @@
 # your system.    Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, localDNSip, ... }:
 
 {
     imports =
@@ -10,7 +10,6 @@
             ./hardware-configuration.nix
         ];
 
-    # Bootloader.
     boot.loader.systemd-boot.enable = true;
     boot.loader.efi.canTouchEfiVariables = true;
     boot.kernelParams = [ 
@@ -22,18 +21,16 @@
 
     nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-    # Use latest kernel.
     boot.kernelPackages = pkgs.linuxPackages_latest;
 
-    networking.hostName = "ogisui"; # Define your hostname.
-    # networking.wireless.enable = true;    # Enables wireless support via wpa_supplicant.
-
-    # Configure network proxy if necessary
-    # networking.proxy.default = "http://user:password@proxy:port/";
-    # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
+    networking.hostName = "ogisui"; 
+    networking.nameservers = [ localDNSip ];
     # Enable networking
-    networking.networkmanager.enable = true;
+    networking.networkmanager = {
+        enable = true;
+        dns = "none";
+        insertNameservers = [ localDNSip ];
+    };
 
     # Set your time zone.
     time.timeZone = "Europe/Warsaw";
@@ -66,9 +63,10 @@
     services.xserver = {
 	enable = true;
 	videoDrivers = [ "nvidia" ];
-        displayManager.gdm.enable = true;
-        desktopManager.gnome.enable = true;
     };
+    services.desktopManager.gnome.enable = true;
+    services.displayManager.gdm.enable = true;
+
     services.xserver.xkb = {
         layout = "us";
         variant = "";
@@ -86,18 +84,8 @@
         alsa.enable = true;
         alsa.support32Bit = true;
         pulse.enable = true;
-        # If you want to use JACK applications, uncomment this
-        #jack.enable = true;
-
-        # use the example session manager (no others are packaged yet so this is enabled by default,
-        # no need to redefine it in your config for now)
-        #media-session.enable = true;
     };
 
-    # Enable touchpad support (enabled default in most desktopManager).
-    # services.xserver.libinput.enable = true;
-
-    # Define a user account. Don't forget to set a password with ‘passwd’.
     users.users.jamjan = {
         isNormalUser = true;
         description = "jamjan";
@@ -114,7 +102,6 @@
     # Allow unfree packages
     nixpkgs.config.allowUnfree = true;
 
-    # List packages installed in system profile. To search, run:
     # $ nix search wget
     environment.systemPackages = with pkgs; [
         neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
@@ -127,26 +114,11 @@
     programs.steam.enable = true;
     programs.dconf.enable = true;
 
-    # Some programs need SUID wrappers, can be configured further or are
-    # started in user sessions.
-    # programs.mtr.enable = true;
-    # programs.gnupg.agent = {
-    #     enable = true;
-    #     enableSSHSupport = true;
-    # };
-
-
     services.tailscale.enable = true;
     networking.firewall = {
         enable=true;
         allowedUDPPorts = [ config.services.tailscale.port ];
     };
-
-    # Open ports in the firewall.
-    # networking.firewall.allowedTCPPorts = [ ... ];
-    # networking.firewall.allowedUDPPorts = [ ... ];
-    # Or disable the firewall altogether.
-    # networking.firewall.enable = false;
 
     # This value determines the NixOS release from which the default
     # settings for stateful data, like file locations and database versions
