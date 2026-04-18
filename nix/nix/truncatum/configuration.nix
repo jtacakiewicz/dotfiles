@@ -1,5 +1,5 @@
 
-{ config, pkgs, ... }:
+{ config, pkgs, hostLanIp, ... }:
 
 {
   imports =
@@ -24,7 +24,7 @@
 
   networking.interfaces.eno1.ipv4.addresses = [
     {
-      address = "192.168.1.110";
+      address = hostLanIp;
       prefixLength = 24;
     }
   ];

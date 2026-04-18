@@ -34,6 +34,7 @@
 
     outputs = inputs@{ self, nixpkgs, nix-darwin, nix-homebrew, homebrew-core, homebrew-cask, aerospace-tap, home-manager, forgejo, blocky-dns, ... }:
         let
+            servIp = import ./truncatum/ip.nix;
             systems = {
                 darwin = "aarch64-darwin";
                 linux = "x86_64-linux";
@@ -95,10 +96,11 @@
             };
             nixosConfigurations."truncatum" = nixpkgs.lib.nixosSystem {
                 system = systems.linux; # Assuming 'systems' is defined and 'linux' is "x86_64-linux"
+                specialArgs = {
+                    hostLanIp = servIp.LANip;
+                };
                 modules = [
-                    ({ config, pkgs, ... }: 
-                        import ./truncatum/configuration.nix { inherit config pkgs inputs home-manager; }
-                    )
+                    ./truncatum/configuration.nix
                     forgejo.nixosModules.forgejo-container
                     blocky-dns.nixosModules.blocky-container
                 ];
