@@ -67,6 +67,11 @@
             FXDefaultSearchScope = "clmv";
         };
     };
+    services.tailscale.enable = true;
+    networking.firewall = {
+        enable = true;
+        allowedUDPPorts = [ config.services.tailscale.port ];
+    };
 
     fonts.packages = [
         pkgs.nerd-fonts.jetbrains-mono
