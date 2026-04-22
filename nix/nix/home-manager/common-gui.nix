@@ -9,6 +9,7 @@
     home.packages = with pkgs; [
         obsidian
         spotify
+        firefox
     ];
     services.syncthing = {
         enable = true;

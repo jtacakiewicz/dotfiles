@@ -12,8 +12,6 @@
         pkgs.yarn
         # pkgs.python3
 
-        pkgs.docker
-
         pkgs.fd
         pkgs.htop
         pkgs.jq
@@ -44,7 +42,6 @@
         ];
         casks = [
             "aerospace"
-            "docker"
         ];
         onActivation.autoUpdate = true;
         onActivation.upgrade = true;
@@ -68,10 +65,6 @@
         };
     };
     services.tailscale.enable = true;
-    networking.firewall = {
-        enable = true;
-        allowedUDPPorts = [ config.services.tailscale.port ];
-    };
 
     fonts.packages = [
         pkgs.nerd-fonts.jetbrains-mono

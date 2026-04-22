@@ -3,10 +3,6 @@
 {
     imports = [
         inputs.nix-colors.homeManagerModules.default
-        # ./modules/coding.nix
-        # ./modules/gaming.nix
-        # ./modules/ollama.nix
-        # ./modules/linux-keybinds.nix
     ];
     home.username = "epi";
     home.homeDirectory = "/Users/epi";
