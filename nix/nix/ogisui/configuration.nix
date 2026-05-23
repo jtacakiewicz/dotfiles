@@ -67,6 +67,12 @@
             options = "ctrl:nocaps";
         };
     };
+    xdg.portal = {
+        enable = true;
+        wlr.enable = true;
+
+        config.sway.default = [ "gtk"];
+    };
     programs.sway = {
       enable = true;
       wrapperFeatures.gtk = true;
@@ -116,7 +122,8 @@
 	zsh
         git
         steam
-        tofi
+        tofi # app launcher
+        yazi # file manager
     ];
     programs.zsh.enable = true;
     programs.steam.enable = true;

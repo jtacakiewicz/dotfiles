@@ -1,0 +1,37 @@
+/* Entire bar background */
+window#waybar {
+    background-color: #2e3440; /* Nord Deep Dark */
+    color: #d8dee9; /* Nord Text */
+    font-family: monospace;
+    font-size: 14px;
+}
+
+/* Individual Workspaces */
+#workspaces button {
+    padding: 0 10px;
+    background-color: transparent;
+    color: #88c0d0; /* Nord Ice Blue */
+    border: none;
+    border-radius: 0;
+}
+
+/* The workspace you are currently looking at */
+#workspaces button.focused {
+    background-color: #3b4252;
+    color: #e5e9f0;
+    border-bottom: 3px solid #88c0d0; /* Underline accent */
+}
+
+/* Hover effect on workspaces */
+#workspaces button:hover {
+    background-color: #434c5e;
+    color: #e5e9f0;
+}
+
+/* Clock/Date styling on the right */
+#clock {
+    padding-left: 15px;
+    padding-right: 15px;
+    background-color: #3b4252;
+    color: #8fbcbb; /* Nord Teal */
+}
