@@ -51,48 +51,55 @@
     };
 
     hardware.graphics.enable = true;
-    hardware.nvidia.open = false;  # see the note above
-    # Enable the X11 windowing system.
+    hardware.nvidia.open = true;
 
     systemd.targets.sleep.enable = false;
     systemd.targets.suspend.enable = false;
     systemd.targets.hibernate.enable = false;
     systemd.targets.hybrid-sleep.enable = false;
 
-    # Configure keymap in X11
     services.xserver = {
 	enable = true;
 	videoDrivers = [ "nvidia" ];
+        xkb = {
+            layout = "us";
+            variant = "";
+            options = "ctrl:nocaps";
+        };
     };
-    services.desktopManager.gnome.enable = true;
+    programs.sway = {
+      enable = true;
+      wrapperFeatures.gtk = true;
+      extraOptions = [ "--unsupported-gpu" ];
+    };
+
+    environment.sessionVariables = {
+        WLR_NO_HARDWARE_CURSORS = "1"; # Prevents cursor invisibility on Nvidia
+        NIXOS_OZONE_WL = "1";          # Hints Electron apps (like VSCode/Chromium) to run natively on Wayland
+    };
+
+
+    # Login manager
     services.displayManager.gdm.enable = true;
 
-    services.xserver.xkb = {
-        layout = "us";
-        variant = "";
-        options = "ctrl:nocaps";
-    };
-
-    # Enable CUPS to print documents.
+    # Remove GNOME desktop manager
+    services.desktopManager.gnome.enable = false;
     services.printing.enable = true;
 
-    # Enable sound with pipewire.
     services.pulseaudio.enable = false;
     security.rtkit.enable = true;
+
     services.pipewire = {
-        enable = true;
-        alsa.enable = true;
-        alsa.support32Bit = true;
-        pulse.enable = true;
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
     };
 
     users.users.jamjan = {
         isNormalUser = true;
         description = "jamjan";
         extraGroups = [ "networkmanager" "wheel" ];
-        packages = with pkgs; [
-        #    thunderbird
-        ];
 	shell = pkgs.zsh;
     };
 
@@ -104,11 +111,12 @@
 
     # $ nix search wget
     environment.systemPackages = with pkgs; [
-        neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+        neovim
         wget
 	zsh
         git
         steam
+        tofi
     ];
     programs.zsh.enable = true;
     programs.steam.enable = true;

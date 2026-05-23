@@ -1,0 +1,25 @@
+set $mod Super_L
+bindsym --release $mod exec ~/.config/sway/launcher.sh
+input * {
+    xkb_options ctrl:nocaps
+}
+# displays
+output "DP-1" {
+    mode  2560x1440@143.912Hz
+    pos 1080 152
+    transform normal
+    scale 1.0
+    scale_filter linear
+    adaptive_sync off
+    dpms on
+}
+output "HDMI-A-1" {
+    mode  1920x1080@60.0Hz
+    pos 0 0
+    transform 90
+    scale 1.0
+    scale_filter nearest
+    adaptive_sync off
+    dpms on
+}
+# workspaces

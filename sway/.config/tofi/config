@@ -1,0 +1,29 @@
+# --- Layout & Window Settings ---
+width = 100%
+height = 100%
+border-width = 0
+outline-width = 0
+padding-left = 35%
+padding-top = 35%
+result-spacing = 25
+num-results = 5
+font = monospace
+
+# --- Nord Colorscheme ---
+
+background-color = #2E3440E6
+
+text-color = #D8DEE9          
+
+prompt-color = #8FBCBB        
+
+input-color = #E5E9F0         
+
+selection-color = #88C0D0     
+
+selection-background = #3B4252 
+
+selection-background-padding = 10, 15
+selection-background-corner-radius = 4
+
+hide-cursor = false
