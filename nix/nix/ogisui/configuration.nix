@@ -1,12 +1,8 @@
-# Edit this configuration file to define what should be installed on
-# your system.    Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, localDNSip, ... }:
+{ config, pkgs, lib, localDNSip, ... }:
 
 {
     imports =
-        [ # Include the results of the hardware scan.
+        [
             ./hardware-configuration.nix
         ];
 
@@ -32,10 +28,8 @@
         insertNameservers = [ localDNSip ];
     };
 
-    # Set your time zone.
     time.timeZone = "Europe/Warsaw";
 
-    # Select internationalisation properties.
     i18n.defaultLocale = "en_US.UTF-8";
 
     i18n.extraLocaleSettings = {
@@ -69,9 +63,16 @@
     };
     xdg.portal = {
         enable = true;
-        wlr.enable = true;
 
-        config.sway.default = [ "gtk"];
+        extraPortals = with pkgs; [
+            xdg-desktop-portal-wlr
+        ];
+
+        config = {
+            common = {
+                default = "wlr";
+            };
+        };
     };
     programs.sway = {
       enable = true;
@@ -85,10 +86,8 @@
     };
 
 
-    # Login manager
     services.displayManager.gdm.enable = true;
 
-    # Remove GNOME desktop manager
     services.desktopManager.gnome.enable = false;
     services.printing.enable = true;
 
@@ -109,21 +108,16 @@
 	shell = pkgs.zsh;
     };
 
-    # Install firefox.
     programs.firefox.enable = true;
 
-    # Allow unfree packages
     nixpkgs.config.allowUnfree = true;
 
-    # $ nix search wget
     environment.systemPackages = with pkgs; [
         neovim
         wget
 	zsh
         git
         steam
-        tofi # app launcher
-        yazi # file manager
     ];
     programs.zsh.enable = true;
     programs.steam.enable = true;
