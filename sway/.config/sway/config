@@ -1,9 +1,19 @@
 bindsym --release Super_L exec ~/.config/sway/launcher.sh
-bindsym --release Mod1+Return exec alacritty
-exec waybar &
+
+default_border pixel 1
+default_floating_border pixel 1
+hide_edge_borders both
+
+client.focused          #4c7899 #285577 #ffffff #2e9ef4 #4c7899
+client.focused_inactive #222222 #222222 #888888 #222222 #222222
+client.unfocused        #222222 #222222 #888888 #222222 #222222
+
+set $term alacritty
+
 input * {
     xkb_options ctrl:nocaps
 }
+seat seat0 xcursor_theme macOS 24
 bar {
     swaybar_command swaybar
 
@@ -21,6 +31,7 @@ bar {
         inactive_workspace #2e3440 #2e3440 #81a1c1
         urgent_workspace   #bf616a #bf616a #e5e9f0
     }
+    tray_output none
 }
 output * bg ~/.config/sway/wallpaper.png fill
 # displays
@@ -44,6 +55,7 @@ output "HDMI-A-1" {
 }
 set $mod Mod1
 set $super Super_L
+set $focused_output focused
 # workspaces
 set $ws_browse "Browse"
 set $ws_code   "Code"
@@ -51,12 +63,18 @@ set $ws_files  "Files"
 set $ws_music  "Music"
 set $ws_game   "Gaming"
 set $ws_notes  "Notes"
+
+
+bindsym XF86AudioRaiseVolume exec 'pactl set-sink-volume @DEFAULT_SINK@ +5%'
+bindsym XF86AudioLowerVolume exec 'pactl set-sink-volume @DEFAULT_SINK@ -5%'
+bindsym XF86AudioMute exec 'pactl set-sink-mute @DEFAULT_SINK@ toggle'
+bindsym $mod+p exec grim -g "$(slurp -d -b 00000044 -c 00ff00ff -s ffffff11)" - | wl-copy
 # Switch to specific workspaces
-bindsym $mod+1 workspace "temp_1"
-bindsym $mod+2 workspace "temp_2"
-bindsym $mod+3 workspace "temp_3"
-bindsym $mod+4 workspace "temp_4"
-bindsym $mod+5 workspace "temp_5"
+bindsym $mod+1 workspace "1"
+bindsym $mod+2 workspace "2"
+bindsym $mod+3 workspace "3"
+bindsym $mod+4 workspace "4"
+bindsym $mod+5 workspace "5"
 
 bindsym $mod+period workspace $ws_files
 bindsym $mod+comma workspace $ws_notes
@@ -65,11 +83,11 @@ bindsym $mod+G workspace $ws_game
 bindsym $mod+M workspace $ws_music
 bindsym $mod+Z workspace $ws_code
 
-bindsym $mod+Shift+1 move container to workspace "temp_1"
-bindsym $mod+Shift+2 move container to workspace "temp_2"
-bindsym $mod+Shift+3 move container to workspace "temp_3"
-bindsym $mod+Shift+4 move container to workspace "temp_4"
-bindsym $mod+Shift+5 move container to workspace "temp_5"
+bindsym $mod+Shift+1 move container to workspace "1"
+bindsym $mod+Shift+2 move container to workspace "2"
+bindsym $mod+Shift+3 move container to workspace "3"
+bindsym $mod+Shift+4 move container to workspace "4"
+bindsym $mod+Shift+5 move container to workspace "5"
 
 bindsym $mod+Shift+period move container to workspace $ws_files
 bindsym $mod+Shift+comma move container to workspace $ws_notes
@@ -78,10 +96,10 @@ bindsym $mod+Shift+G move container to workspace $ws_game
 bindsym $mod+Shift+M move container to workspace $ws_music
 bindsym $mod+Shift+Z move container to workspace $ws_code
 
-bindsym $mod+Shift+Left move container to output left
-bindsym $mod+Shift+Right move container to output right
-bindsym $mod+Shift+Up move container to output up
-bindsym $mod+Shift+Down move container to output down
+bindsym $mod+Shift+Left move workspace to output left
+bindsym $mod+Shift+Right move workspace to output right
+bindsym $mod+Shift+Up move workspace to output up
+bindsym $mod+Shift+Down move workspace to output down
 
 bindsym $mod+h focus left
 bindsym $mod+j focus down
@@ -92,3 +110,18 @@ bindsym $mod+Left move left
 bindsym $mod+Down move down
 bindsym $mod+Up move up
 bindsym $mod+Right move right
+
+bindsym $mod+q kill
+bindsym --release Mod1+Return exec alacritty
+
+workspace $ws_music output "HDMI-A-1"
+exec swaymsg "workspace $ws_browse; exec firefox"
+exec swaymsg "workspace $ws_code; exec alacritty"
+exec swaymsg "workspace $ws_files; exec yazi"
+exec swaymsg "workspace $ws_music; exec spotify"
+exec swaymsg "workspace $ws_notes; exec obsidian"
+
+assign [app_id="spotify"] $ws_music
+exec spotify
+assign [app_id="electron" title="(?i)obsidian"] $ws_notes
+exec obsidian
