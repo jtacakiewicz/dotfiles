@@ -7,6 +7,7 @@
         ./modules/ollama.nix
         ./modules/linux-keybinds.nix
         ./modules/webapps.nix
+        ./modules/sway.nix
     ];
     home.packages = with pkgs; [
         gimp
