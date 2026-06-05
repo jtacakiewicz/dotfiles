@@ -115,6 +115,11 @@ bindsym $mod+q kill
 bindsym --release Mod1+Return exec alacritty
 
 workspace $ws_music output "HDMI-A-1"
+workspace $ws_notes output "HDMI-A-1" 
+workspace $ws_browse output "DP-1" 
+workspace $ws_code output "DP-1" 
+workspace $ws_files output "DP-1" 
+workspace $ws_game output "DP-1" 
 exec swaymsg "workspace $ws_browse; exec firefox"
 exec swaymsg "workspace $ws_code; exec alacritty"
 exec swaymsg "workspace $ws_files; exec yazi"
