@@ -15,6 +15,7 @@
         slurp # ss tool
         wl-clipboard # clipboard
         jq # scripts
+        zathura
     ];
     programs.zathura = {
         enable = true;
@@ -31,8 +32,11 @@
         };
     };
 
-    xdg.mimeApps.defaultApplications = {
-        "application/pdf" = [ "zathura" ];
+    xdg.mimeApps = {
+        enable = true;
+        defaultApplications = {
+            "application/pdf" = "org.pwmt.zathura.desktop";
+        };
     };
     programs.waybar.enable = true;
 }
