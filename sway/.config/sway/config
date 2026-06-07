@@ -1,3 +1,5 @@
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+exec systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
 bindsym --release Super_L exec ~/.config/sway/launcher.sh
 
 default_border pixel 1
@@ -12,6 +14,7 @@ set $term alacritty
 
 input * {
     xkb_options ctrl:nocaps
+    xkb_layout "pl"
 }
 seat seat0 xcursor_theme macOS 24
 bar {
