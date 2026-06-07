@@ -10,7 +10,6 @@
   home.packages = with pkgs; [
     tofi # app launcher
     yazi # file manager
-    kitty # terminal emulator (required for termfilechooser)
     dragon-drop # drag-and-drop-yazi
     grim # ss tool
     slurp # ss tool
@@ -113,7 +112,7 @@
           path="$4"
           out="$5"
 
-          exec ${pkgs.alacritty}/bin/alacritty --class file_chooser -e ${pkgs.yazi}/bin/yazi --chooser-file="$out" "$path"
+          exec ${pkgs.alacritty}/bin/alacritty --class file_chooser -e ${pkgs.coreutils}/bin/env YAZI_CONFIG_HOME=${config.home.homeDirectory}/.config/yazi ${pkgs.yazi}/bin/yazi --chooser-file="$out" "$path"
           ''}
         default_dir=/tmp
         open_mode=suggested
