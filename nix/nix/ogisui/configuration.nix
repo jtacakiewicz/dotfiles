@@ -61,19 +61,6 @@
             options = "ctrl:nocaps";
         };
     };
-    xdg.portal = {
-        enable = true;
-
-        extraPortals = with pkgs; [
-            xdg-desktop-portal-wlr
-        ];
-
-        config = {
-            common = {
-                default = "wlr";
-            };
-        };
-    };
     programs.sway = {
       enable = true;
       wrapperFeatures.gtk = true;
