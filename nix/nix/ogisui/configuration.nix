@@ -51,15 +51,20 @@
     systemd.targets.suspend.enable = false;
     systemd.targets.hibernate.enable = false;
     systemd.targets.hybrid-sleep.enable = false;
+    services.logind.enable = true;
 
     services.xserver = {
-	enable = true;
+	enable = false;
 	videoDrivers = [ "nvidia" ];
         xkb = {
             layout = "us";
             variant = "";
             options = "ctrl:nocaps";
         };
+    };
+    services.dbus = {
+        enable = true;
+        implementation = "broker";
     };
     programs.sway = {
       enable = true;
@@ -70,12 +75,34 @@
     environment.sessionVariables = {
         WLR_NO_HARDWARE_CURSORS = "1"; # Prevents cursor invisibility on Nvidia
         NIXOS_OZONE_WL = "1";          # Hints Electron apps (like VSCode/Chromium) to run natively on Wayland
+        XDG_CURRENT_DESKTOP = "sway";
+        XDG_SESSION_TYPE = "wayland";
     };
 
+    services.displayManager.ly = {
+        enable = true;
+        x11Support = true;
+        settings = {
+            bg = "0x2E3440";          # nord0
+            fg = "0xD8DEE9";          # nord4
 
-    services.displayManager.gdm.enable = true;
+            input_bg = "0x3B4252";    # nord1
+            input_fg = "0xE5E9F0";    # nord5
 
+            border_fg = "0x81A1C1";   # nord9
+            selection_bg = "0x88C0D0";
+            selection_fg = "0x2E3440";
+
+            error_fg = "0xBF616A";    # nord11
+
+            bigclock = true;
+        };
+    };
+    services.displayManager.defaultSession = "sway";
+
+    services.displayManager.gdm.enable = false;
     services.desktopManager.gnome.enable = false;
+
     services.printing.enable = true;
 
     services.pulseaudio.enable = false;
