@@ -31,6 +31,10 @@
       recolor-lightcolor = "#2e3440"; # Map white pages to Nord Dark
       recolor-darkcolor = "#eceff4";  # Map black text to Nord Light
     };
+    mappings = {
+      "<C-e>" = "scroll down";
+      "<C-y>" = "scroll up";
+    };
   };
 
   programs.imv = {

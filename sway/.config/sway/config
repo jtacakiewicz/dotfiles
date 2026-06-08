@@ -15,7 +15,13 @@ set $term alacritty
 input * {
     xkb_options ctrl:nocaps
     xkb_layout "pl"
+    repeat_rate 50
+    repeat_delay 250
 }
+for_window [app_id="file_chooser"] floating enable
+for_window [app_id="file_chooser"] resize set width 70 ppt height 75 ppt
+for_window [app_id="file_chooser"] move position center
+
 seat seat0 xcursor_theme macOS 24
 bar {
     swaybar_command swaybar
@@ -59,6 +65,25 @@ output "HDMI-A-1" {
 set $mod Mod1
 set $super Super_L
 set $focused_output focused
+mode "resize" {
+    bindsym h resize shrink width 10 px or 10 ppt
+    bindsym j resize grow height 10 px or 10 ppt
+    bindsym k resize shrink height 10 px or 10 ppt
+    bindsym l resize grow width 10 px or 10 ppt
+
+    bindsym Left resize shrink width 10 px or 10 ppt
+    bindsym Down resize grow height 10 px or 10 ppt
+    bindsym Up resize shrink height 10 px or 10 ppt
+    bindsym Right resize grow width 10 px or 10 ppt
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym q mode "default"
+    bindsym $mod+r mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
 # workspaces
 set $ws_browse "Browse"
 set $ws_code   "Code"
