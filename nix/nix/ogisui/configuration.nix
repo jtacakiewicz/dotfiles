@@ -45,6 +45,7 @@
     };
 
     hardware.graphics.enable = true;
+    hardware.nvidia.modesetting.enable = true;
     hardware.nvidia.open = true;
 
     systemd.targets.sleep.enable = false;
@@ -81,21 +82,35 @@
 
     services.displayManager.ly = {
         enable = true;
+        package = pkgs.ly;
         x11Support = true;
         settings = {
-            bg = "0x2E3440";          # nord0
-            fg = "0xD8DEE9";          # nord4
-
-            input_bg = "0x3B4252";    # nord1
-            input_fg = "0xE5E9F0";    # nord5
-
-            border_fg = "0x81A1C1";   # nord9
-            selection_bg = "0x88C0D0";
-            selection_fg = "0x2E3440";
-
-            error_fg = "0xBF616A";    # nord11
-
-            bigclock = true;
+            animation = "doom"; # "doom", "matrix", "colormix"
+            animation_timeout_sec = 300;
+            auth_fails = 3; 
+            bg = "0x02000000";
+            border_fg = "0x01FFFFFF";
+            box_title = "null";
+            clear_password = true;
+            clock = "%B, %A %d @ %H:%M:%S";
+            colormix_col1 = "0x08FF0000";
+            colormix_col2 = "0x0800FF00";
+            colormix_col3 = "0x080000FF";
+            default_input = "password";
+            error_bg = "0x02000000";
+            error_fg = "0x01FF0000";
+            fg = "0x01FFFFFF";
+            hide_borders = true;
+            hide_version_string = true;
+            hide_key_hints = true;
+            initial_info_text = "null"; # hostname
+            lang = "en";
+            load = true;
+            margin_box_h = 0;
+            margin_box_v = 0;
+            min_refresh_delta = 100;
+            save = true;
+            text_in_center = false;
         };
     };
     services.displayManager.defaultSession = "sway";
