@@ -85,10 +85,11 @@
         package = pkgs.ly;
         x11Support = true;
         settings = {
-            animation = "doom"; # "doom", "matrix", "colormix"
-            animation_timeout_sec = 300;
+            animation = "dur_file"; # "doom", "matrix", "colormix"
+            animation_timeout_sec = 0;
             auth_fails = 3; 
             bg = "0x02000000";
+            dur_file_path = "/etc/ly/example.dur";
             border_fg = "0x01FFFFFF";
             box_title = "null";
             clear_password = true;
