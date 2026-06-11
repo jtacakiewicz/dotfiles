@@ -4,6 +4,7 @@
     imports = [
         inputs.nix-colors.homeManagerModules.default
         ./modules/coding.nix
+        ./modules/firefox.nix
     ];
     home.stateVersion = "24.11"; 
 
