@@ -13,6 +13,8 @@
         "pcie_aspm=off"
         "nvme_core.hmb_for_ssd=0"
         "nvme_core.set_min_log_size=0"
+        "video=DP-1:1920x1080@60"
+        "video=HDMI-A-1:1920x1080@60"
     ];
 
     nix.settings.experimental-features = [ "nix-command" "flakes" ];
