@@ -1,6 +1,9 @@
 { config, pkgs, inputs, ... }:
 
 {
+    imports = [
+        ./modules/firefox.nix
+    ];
     home.stateVersion = "24.11"; 
 
     nixpkgs.config.allowUnfree = true;
@@ -9,7 +12,6 @@
     home.packages = with pkgs; [
         obsidian
         spotify
-        firefox
     ];
     services.syncthing = {
         enable = true;

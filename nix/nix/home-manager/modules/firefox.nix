@@ -11,56 +11,127 @@ let
     };
 in
     {
+    xdg.enable = true;
     programs = {
         firefox = {
+            package = pkgs.firefox;
             enable = true;
-            package = pkgs.wrapFirefox pkgs.firefox-unwrapped {
-                extraPolicies = {
-                    DisableTelemetry = true;
-                    ExtensionSettings = {
-                        "*".installation_mode = "blocked";
-                        "uBlock0@raymondhill.net" = {
-                            install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
-                            installation_mode = "force_installed";
-                        };
-                        "{c2c003ee-bd69-42a2-b0e9-6f34222cb046}" = {
-                            install_url =
-                                "https://addons.mozilla.org/firefox/downloads/latest/proton-pass/latest.xpi";
-                            installation_mode = "force_installed";
-                        };
+            configPath = "${config.xdg.configHome}/mozilla/firefox";
+            policies = {
+                DisableTelemetry = true;
+                ExtensionSettings = {
+                    "*".installation_mode = "blocked";
+                    "uBlock0@raymondhill.net" = {
+                        install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
+                        installation_mode = "force_installed";
                     };
+                    "78272b6fa58f4a1abaac99321d503a20@proton.me" = {
+                        install_url = "https://addons.mozilla.org/firefox/downloads/latest/proton-pass/latest.xpi";
+                        installation_mode = "force_installed";
+                    };
+                };
 
-                    Preferences = { 
-                        "browser.contentblocking.category" = { Value = "strict"; Status = "locked"; };
-                        "extensions.pocket.enabled" = lock-false;
-                        "extensions.screenshots.disabled" = lock-true;
-                    };
+                Preferences = { 
+                    "browser.contentblocking.category" = { Value = "strict"; Status = "locked"; };
+                    "extensions.pocket.enabled" = lock-false;
+                    "extensions.screenshots.disabled" = lock-true;
                 };
             };
 
-            profiles ={
-                profile_0 = {           # choose a profile name; directory is /home/<user>/.mozilla/firefox/profile_0
-                    id = 0;               # 0 is the default profile; see also option "isDefault"
-                    name = "profile_0";   # name as listed in about:profiles
-                    isDefault = true;     # can be omitted; true if profile ID is 0
-                    settings = {          # specify profile-specific preferences here; check about:config for options
-                        "browser.newtabpage.activity-stream.feeds.section.highlights" = false;
-                        "browser.startup.homepage" = "https://nixos.org";
-                        "browser.newtabpage.pinned" = [{
-                            title = "NixOS";
-                            url = "https://nixos.org";
-                        }];
+            profiles = {
+                default = {
+                    id = 0;
+                    name = "default";
+                    isDefault = true;
+                    settings = {
+                        # "browser.startup.homepage" = "https://duckduckgo.com";
+                        "browser.search.defaultenginename" = "ddg";
+                        "browser.search.order.1" = "ddg";
+
+                        "signon.rememberSignons" = false;
+                        "widget.use-xdg-desktop-portal.file-picker" = 1;
+                        "browser.aboutConfig.showWarning" = false;
+                        "browser.compactmode.show" = true;
+                        "browser.cache.memory.enable" = true;
+                        "browser.cache.memory.capacity" = 1048576; # 1 GB memory cache max
+
+                        "gfx.webrender.all" = true;
+                        "media.hardware-video-decoding.enabled" = true;
+
+                        "network.dns.disablePrefetch" = false;
+                        "network.prefetch-next" = true;
+
+                        "browser.download.alwaysOpenPanel" = true;
+
+                        "widget.disable-workspace-management" = true;
+                        "network.connectivity-service.UUID" = "";
+                        "mousewheel.default.delta_multiplier_x" = 100;
+                        "mousewheel.default.delta_multiplier_y" = 100;
+                        "mousewheel.default.delta_multiplier_z" = 100;
+                    };
+                    search = {
+                        force = true;
+                        default = "ddg";
+                        order = [ "ddg" "google" ];
                     };
                 };
-                # profile_1 = {
-                #   id = 1;
-                #   name = "profile_1";
-                #   isDefault = false;
-                #   settings = {
-                #     "browser.newtabpage.activity-stream.feeds.section.highlights" = true;
-                #     "browser.startup.homepage" = "https://ecosia.org";
-                #   };
-                # };
+                kiosk = {
+                    id = 1;
+                    name = "kiosk";
+                    isDefault = false;
+                    settings = {
+                        "browser.startup.homepage" = "https://duckduckgo.com";
+                        "browser.startup.page" = 1; # Open the homepage on startup
+                        "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+
+                        "browser.sessionstore.resume_from_crash" = false;
+                        "browser.sessionstore.max_resumed_crashes" = 0;
+
+                        "browser.tabs.warnOnClose" = false;
+                        "browser.sharedData.active" = false;
+                        "signon.rememberSignons" = false;
+                        "browser.shell.checkDefaultBrowser" = false;
+
+                        "browser.aboutConfig.showWarning" = true;
+
+                        "gfx.webrender.all" = true;
+                        "media.hardware-video-decoding.enabled" = true;
+                        "browser.cache.memory.enable" = true;
+                        "browser.cache.memory.capacity" = 1048576;
+                    };
+                    userChrome = ''
+                        @namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+
+                        /* Optional: ensure the chrome folder exists and the stylesheet is loaded */
+                        #navigator-toolbox, /* main toolbar container */
+                        #TabsToolbar, /* tab bar */
+                        #nav-bar, /* address bar and navigation controls */
+                        #PlacesToolbar, /* bookmarks/search bar area if present */
+                        #titlebar, /* title bar (the OS window title) */
+                        #toolbar-menubar, /* menu bar (if visible) */
+                        #bookmarksBarToolbar, /* bookmarks toolbar (if present) */
+                        #Buttons, /* generic placeholder, might not exist depending on version */
+                        #TabsToolbar, #nav-bar { display: none !important; }
+
+                        /* If you want to keep a slim navigation panel (home/back/forward) visible, adjust selectively.
+                        For a completely hidden chrome, keep the previous block and remove this one. */
+                        // #back-button, #forward-button, #reload-button, #home-button, #urlbar, #searchbar { display: none !important; }
+
+                        /* Fullscreen-like behavior: auto-hide the top chrome until mouse enters */
+                        #top-controls { display: none !important; } /* older theme elements */
+                        #titlebar { display: none !important; }
+
+                        /* If you want to auto-hide the top bar but reveal on hover, use this (optional) */
+                        #navigator-toolbox[closed-when-fullscreen="true"] { display: none !important; }
+                        #navigator-toolbox:hover { display: -moz-box !important; }
+
+                        /* Ensure content area uses full height when chrome is hidden */
+                        #content, #main-journal { height: 100% !important; }
+
+                        /* Optional: remove context menu top bar (in case any extra bars appear) */
+                        #context-navigation { display: none !important; }
+                    '';
+                };
             };
         };
     };
