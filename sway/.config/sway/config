@@ -4,7 +4,6 @@ bindsym --release Super_L exec ~/.config/sway/launcher.sh
 
 default_border pixel 1
 default_floating_border pixel 1
-hide_edge_borders both
 
 client.focused          #4c7899 #285577 #ffffff #2e9ef4 #4c7899
 client.focused_inactive #222222 #222222 #888888 #222222 #222222
@@ -154,7 +153,7 @@ exec swaymsg "workspace $ws_files; exec yazi"
 exec swaymsg "workspace $ws_music; exec spotify"
 exec swaymsg "workspace $ws_notes; exec obsidian"
 
-assign [app_id="spotify"] $ws_music
+assign [class="Spotify"] $ws_music
 exec spotify
-assign [app_id="electron" title="(?i)obsidian"] $ws_notes
+assign [app_id="obsidian"] $ws_notes
 exec obsidian
