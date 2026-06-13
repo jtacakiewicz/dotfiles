@@ -4,7 +4,7 @@
 {
     imports = [
         ./modules/linux-gaming.nix
-        ./modules/ollama.nix
+        ./modules/llama-cpp.nix
         ./modules/linux-keybinds.nix
         ./modules/webapps.nix
         ./modules/sway.nix
