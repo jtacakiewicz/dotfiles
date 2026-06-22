@@ -15,7 +15,7 @@ input * {
     xkb_options ctrl:nocaps
     xkb_layout "pl"
     repeat_rate 50
-    repeat_delay 250
+    repeat_delay 200
 }
 for_window [app_id="file_chooser"] floating enable
 for_window [app_id="file_chooser"] resize set width 70 ppt height 75 ppt
@@ -88,6 +88,7 @@ set $ws_browse "Browse"
 set $ws_code   "Code"
 set $ws_files  "Files"
 set $ws_music  "Music"
+set $ws_comms  "Comms"
 set $ws_game   "Gaming"
 set $ws_notes  "Notes"
 
@@ -104,10 +105,11 @@ bindsym $mod+3 workspace "3"
 bindsym $mod+4 workspace "4"
 bindsym $mod+5 workspace "5"
 
-bindsym $mod+period workspace $ws_files
-bindsym $mod+comma workspace $ws_notes
+bindsym $mod+period workspace $ws_notes
+bindsym $mod+comma workspace $ws_files
 bindsym $mod+slash workspace $ws_browse
 bindsym $mod+G workspace $ws_game
+bindcode $mod+48 workspace $ws_comms
 bindsym $mod+M workspace $ws_music
 bindsym $mod+Z workspace $ws_code
 
@@ -117,10 +119,11 @@ bindsym $mod+Shift+3 move container to workspace "3"
 bindsym $mod+Shift+4 move container to workspace "4"
 bindsym $mod+Shift+5 move container to workspace "5"
 
-bindsym $mod+Shift+period move container to workspace $ws_files
-bindsym $mod+Shift+comma move container to workspace $ws_notes
+bindsym $mod+Shift+period move container to workspace $ws_notes
+bindsym $mod+Shift+comma move container to workspace $ws_files
 bindsym $mod+Shift+slash move container to workspace $ws_browse
 bindsym $mod+Shift+G move container to workspace $ws_game
+bindcode $mod+Shift+48 move container to workspace $ws_comms
 bindsym $mod+Shift+M move container to workspace $ws_music
 bindsym $mod+Shift+Z move container to workspace $ws_code
 
@@ -143,6 +146,7 @@ bindsym $mod+q kill
 bindsym --release Mod1+Return exec alacritty
 
 workspace $ws_music output "HDMI-A-1"
+workspace $ws_comms output "HDMI-A-1"
 workspace $ws_notes output "HDMI-A-1" 
 workspace $ws_browse output "DP-1" 
 workspace $ws_code output "DP-1" 
@@ -157,4 +161,3 @@ exec swaymsg "workspace $ws_notes; exec obsidian"
 assign [class="Spotify"] $ws_music
 exec spotify
 assign [app_id="obsidian"] $ws_notes
-exec obsidian
