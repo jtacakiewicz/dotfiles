@@ -49,6 +49,17 @@
     hardware.graphics.enable = true;
     hardware.nvidia.modesetting.enable = true;
     hardware.nvidia.open = true;
+    hardware.bluetooth = {
+        enable = true;
+        powerOnBoot = true;
+        settings = {
+            General = {
+                AutoEnable = true; 
+                FastConnectable = true;
+            };
+        };
+    };
+
 
     systemd.targets.sleep.enable = false;
     systemd.targets.suspend.enable = false;
@@ -132,6 +143,7 @@
       alsa.support32Bit = true;
       pulse.enable = true;
     };
+    services.blueman.enable = true;
 
     users.users.jamjan = {
         isNormalUser = true;
