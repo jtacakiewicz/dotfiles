@@ -96,6 +96,7 @@ bindsym XF86AudioRaiseVolume exec 'pactl set-sink-volume @DEFAULT_SINK@ +5%'
 bindsym XF86AudioLowerVolume exec 'pactl set-sink-volume @DEFAULT_SINK@ -5%'
 bindsym XF86AudioMute exec 'pactl set-sink-mute @DEFAULT_SINK@ toggle'
 bindsym $mod+p exec grim -g "$(slurp -d -b 00000044 -c 00ff00ff -s ffffff11)" - | wl-copy
+bindsym $mod+o exec grim -g "$(slurp -d -b 00000044 -c 00ff00ff -s ffffff11)" - | tesseract -l "pol" stdin stdout | wl-copy 
 # Switch to specific workspaces
 bindsym $mod+1 workspace "1"
 bindsym $mod+2 workspace "2"

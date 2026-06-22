@@ -13,6 +13,7 @@
     dragon-drop # drag-and-drop-yazi
     grim # ss tool
     slurp # ss tool
+    tesseract # text from ss
     wl-clipboard # clipboard
     jq # scripts
     zathura # documents
