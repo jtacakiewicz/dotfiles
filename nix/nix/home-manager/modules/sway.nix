@@ -18,6 +18,7 @@
     jq # scripts
     zathura # documents
     imv # pictures
+    playerctl # music control
   ];
 
   programs.zathura = {
