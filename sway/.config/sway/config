@@ -162,6 +162,6 @@ exec swaymsg "workspace $ws_files; exec yazi"
 exec swaymsg "workspace $ws_music; exec spotify"
 exec swaymsg "workspace $ws_notes; exec obsidian"
 
-assign [class="Spotify"] $ws_music
+assign [app_id="spotify"] $ws_music
 exec spotify
 assign [app_id="obsidian"] $ws_notes
