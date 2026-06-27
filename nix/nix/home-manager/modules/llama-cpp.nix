@@ -41,6 +41,7 @@ in
         llama-package
         llama-ctl
     ];
+    xdg.configFile."opencode/skills/".source = assets/skills;
     programs.opencode = {
         enable = true;
         settings = {
