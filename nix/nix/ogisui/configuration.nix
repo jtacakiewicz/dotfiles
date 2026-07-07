@@ -4,10 +4,10 @@
     imports =
         [
             ./hardware-configuration.nix
+            ../shared/common.nix
         ];
 
     boot.loader.systemd-boot.enable = true;
-    boot.loader.efi.canTouchEfiVariables = true;
     boot.kernelParams = [ 
         "nvme_core.default_ps_max_latency_us=0"
         "pcie_aspm=off"
@@ -17,33 +17,14 @@
         "video=HDMI-A-1:1920x1080@60"
     ];
 
-    nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
     boot.kernelPackages = pkgs.linuxPackages_latest;
 
     networking.hostName = "ogisui"; 
     networking.nameservers = [ localDNSip ];
-    # Enable networking
     networking.networkmanager = {
         enable = true;
         dns = "none";
         insertNameservers = [ localDNSip ];
-    };
-
-    time.timeZone = "Europe/Warsaw";
-
-    i18n.defaultLocale = "en_US.UTF-8";
-
-    i18n.extraLocaleSettings = {
-        LC_ADDRESS = "pl_PL.UTF-8";
-        LC_IDENTIFICATION = "pl_PL.UTF-8";
-        LC_MEASUREMENT = "pl_PL.UTF-8";
-        LC_MONETARY = "pl_PL.UTF-8";
-        LC_NAME = "pl_PL.UTF-8";
-        LC_NUMERIC = "pl_PL.UTF-8";
-        LC_PAPER = "pl_PL.UTF-8";
-        LC_TELEPHONE = "pl_PL.UTF-8";
-        LC_TIME = "pl_PL.UTF-8";
     };
 
     hardware.graphics.enable = true;
@@ -59,7 +40,6 @@
             };
         };
     };
-
 
     systemd.targets.sleep.enable = false;
     systemd.targets.suspend.enable = false;
@@ -161,15 +141,8 @@
         git
         steam
     ];
-    programs.zsh.enable = true;
     programs.steam.enable = true;
     programs.dconf.enable = true;
-
-    services.tailscale.enable = true;
-    networking.firewall = {
-        enable=true;
-        allowedUDPPorts = [ config.services.tailscale.port ];
-    };
 
     # This value determines the NixOS release from which the default
     # settings for stateful data, like file locations and database versions
