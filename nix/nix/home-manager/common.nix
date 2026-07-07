@@ -1,11 +1,12 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, inputs, lib, user ? "", homeDir ? "", ... }:
 
 {
     imports = [
         inputs.nix-colors.homeManagerModules.default
         ./modules/coding.nix
     ];
-    home.stateVersion = "24.11"; 
+    
+    home.stateVersion = "24.11";
 
     nixpkgs.config.allowUnfree = true;
 
@@ -22,4 +23,7 @@
     };
     programs.home-manager.enable = true;
 
+    home.username = lib.mkIf (user != "") user;
+    home.homeDirectory = lib.mkIf (user != "") homeDir;
 }
+

@@ -8,6 +8,4 @@
     home.packages = with pkgs; [
         libGL
     ];
-    home.username = "jamjan";
-    home.homeDirectory = "/home/jamjan";
-}
+ }

@@ -32,6 +32,4 @@
         };
     };
 
-    home.username = "jamjan";
-    home.homeDirectory = "/home/jamjan";
 }
