@@ -6,6 +6,7 @@
         ./modules/linux-gaming.nix
         ./modules/llama-cpp.nix
         ./modules/linux-keybinds.nix
+        ./modules/opencode.nix
         ./modules/webapps.nix
         ./modules/sway.nix
     ];
