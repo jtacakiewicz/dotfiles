@@ -29,11 +29,15 @@ in
             };
             permission = {
                 external_directory = {
-                  "${config.home.homeDirectory}/opencode/**" = "allow";
-                  "${config.home.homeDirectory}/.config/**" = "allow";
                   "${config.home.homeDirectory}/.dotfiles/**" = "allow";
                   "*" = "deny";
                 };
+            };
+        };
+        tui = {
+            keybinds = {
+                messages_page_up = "ctrl+u";
+                messages_page_down = "ctrl+d";
             };
         };
     };
