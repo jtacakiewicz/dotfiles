@@ -1,9 +1,9 @@
 { pkgs, inputs, home-manager }:
 let
-  mkHome = { pkgs, mods ? [], user ? "", homeDir ? "" }:
+  mkHome = { pkgs, mods ? [], user ? "", homeDir ? "", useCuda ? false }:
     home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
-      extraSpecialArgs = { inherit inputs user homeDir; };
+      extraSpecialArgs = { inherit inputs user homeDir useCuda; };
       modules = [ ./common.nix ] ++ mods;
     };
 in
@@ -16,6 +16,7 @@ in
         ];
         user = "jamjan";
         homeDir = "/home/jamjan"; 
+        useCuda = true;
     };
 
     darwin = mkHome {

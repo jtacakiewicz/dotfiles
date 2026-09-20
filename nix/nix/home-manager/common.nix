@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, lib, user ? "", homeDir ? "", ... }:
+{ config, pkgs, inputs, lib, user ? "", homeDir ? "", useCuda ? false, ... }:
 
 {
     imports = [
@@ -15,7 +15,8 @@
         git
         neovim
         xclip
-        htop
+        (lib.mkIf useCuda btop-cuda)
+        (lib.mkIf (!useCuda) btop)
         syncthing
     ];
     services.syncthing = {
