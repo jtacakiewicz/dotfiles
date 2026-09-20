@@ -132,8 +132,8 @@ fzf-history-widget-smart() {
 zle -N fzf-history-widget fzf-history-widget-smart
 eval "$(zoxide init --cmd cd zsh)"
 #
-if [[ -r "~/.env" ]]; then
-  source ~/.env
+if [[ -r "$HOME/.env" ]]; then
+  source $HOME/.env
 fi
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
