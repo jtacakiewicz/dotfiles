@@ -4,6 +4,7 @@
     imports =
         [
             ./hardware-configuration.nix
+            ./ly-login.nix
             ../shared/common.nix
         ];
 
@@ -73,40 +74,6 @@
         XDG_SESSION_TYPE = "wayland";
     };
 
-    services.displayManager.ly = {
-        enable = true;
-        package = pkgs.ly;
-        x11Support = true;
-        settings = {
-            animation = "dur_file"; # "doom", "matrix", "colormix"
-            animation_timeout_sec = 0;
-            auth_fails = 3; 
-            bg = "0x02000000";
-            dur_file_path = "/etc/ly/example.dur";
-            border_fg = "0x01FFFFFF";
-            box_title = "null";
-            clear_password = true;
-            clock = "%B, %A %d @ %H:%M:%S";
-            colormix_col1 = "0x08FF0000";
-            colormix_col2 = "0x0800FF00";
-            colormix_col3 = "0x080000FF";
-            default_input = "password";
-            error_bg = "0x02000000";
-            error_fg = "0x01FF0000";
-            fg = "0x01FFFFFF";
-            hide_borders = true;
-            hide_version_string = true;
-            hide_key_hints = true;
-            initial_info_text = "null"; # hostname
-            lang = "en";
-            load = true;
-            margin_box_h = 0;
-            margin_box_v = 0;
-            min_refresh_delta = 100;
-            save = true;
-            text_in_center = false;
-        };
-    };
     services.displayManager.defaultSession = "sway";
 
     services.displayManager.gdm.enable = false;
@@ -128,7 +95,7 @@
     users.users.jamjan = {
         isNormalUser = true;
         description = "jamjan";
-        extraGroups = [ "networkmanager" "wheel" ];
+        extraGroups = [ "networkmanager" "wheel" "seat" ];
 	shell = pkgs.zsh;
     };
 
